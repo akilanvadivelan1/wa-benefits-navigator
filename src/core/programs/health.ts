@@ -1,0 +1,173 @@
+/**
+ * Health coverage programs: Apple Health (Medicaid) and ABA LAUNCH.
+ * These are foundational because Apple Health unlocks many other services.
+ */
+
+import type { Program } from "../types.ts";
+import {
+  ageInRange,
+  alwaysPasses,
+  hasAnyCondition,
+  incomeAtOrBelow,
+} from "../ruleHelpers.ts";
+
+export const appleHealth: Program = {
+  id: "appleHealth",
+  category: "health",
+  agency: "HCA",
+  agencyName: "Health Care Authority",
+  content: {
+    humanName: "Free health coverage for your child",
+    officialName: "Apple Health (Medicaid)",
+    oneLiner:
+      "Free or low-cost health insurance that covers doctors, therapies, dental, vision, and ABA, usually with no co-pays for kids.",
+    exampleFirst:
+      "Imagine your child needs a specialist, speech therapy, and new glasses, and the bills are piling up. Apple Health can cover all of that at little or no cost, with no co-pays for children. It is Washington's version of Medicaid (officially called Apple Health).",
+    whatYouGet: [
+      "Doctor and specialist visits (pediatrician, neurologist, psychiatrist)",
+      "ABA therapy for autism and other developmental disabilities",
+      "Speech, occupational, and physical therapy with no visit caps when medically needed",
+      "Dental, vision, and hearing care, including glasses and hearing aids",
+      "Prescriptions and equipment like wheelchairs and communication devices",
+      "Rides to and from medical appointments",
+    ],
+    tips: [
+      "Apply for this first. Many other programs, like DDA waivers and ABA therapy, require Apple Health.",
+      "For children under 21, if a service is medically necessary, Apple Health must cover it, even if it is not in the standard package. This is called EPSDT.",
+      "Even if you have private insurance, your child can often also have Apple Health as secondary coverage to fill gaps.",
+    ],
+  },
+  apply: {
+    url: "https://www.washingtonconnection.org",
+    phone: "1-855-923-4633",
+    steps: [
+      "Apply online at washingtonconnection.org or by phone.",
+      "Provide your family size, income, and residency information.",
+      "Choose a managed care plan (Molina, Coordinated Care, CHPW, or UnitedHealthcare).",
+      "Coverage begins on the first day of the month you apply.",
+    ],
+    documents: [
+      "Proof of income (pay stubs or tax return)",
+      "Proof of Washington residency (utility bill or lease)",
+      "Child's birth certificate",
+      "Social Security numbers",
+      "Photo ID for the parent or guardian",
+    ],
+  },
+  citations: [
+    { label: "HCA Apple Health (Medicaid)", url: "https://www.hca.wa.gov/about-hca/programs-and-initiatives/apple-health-medicaid/" },
+    { label: "Apple Health for Kids", url: "https://www.hca.wa.gov/free-or-low-cost-health-care/i-help-others-apply-and-access-apple-health/apple-health-kids-and-without-premiums" },
+    { label: "EPSDT (children's services)", url: "https://www.hca.wa.gov/free-or-low-cost-health-care/i-need-medical-dental-or-vision-care/children-and-youth-services" },
+  ],
+  dependsOn: [],
+  unlocks: ["dda", "abaLaunch", "respite"],
+  noEligibilityBarriers: false,
+  addresses: ["health", "therapy"],
+  hasCountyLocalContact: false,
+  rules: [
+    ageInRange({
+      id: "appleHealth-age",
+      description: "Apple Health for Kids covers children under 19.",
+      citation: { label: "Apple Health for Kids", url: "https://www.hca.wa.gov/free-or-low-cost-health-care/i-help-others-apply-and-access-apple-health/apple-health-kids-and-without-premiums" },
+      minBand: "under3",
+      maxBand: "13to17",
+      required: false,
+      weight: 2,
+      passReason: "Apple Health for Kids covers children under 19.",
+      failReason: "Standard Apple Health for Kids is for children under 19, but older youth may still qualify through other Apple Health programs.",
+    }),
+    incomeAtOrBelow({
+      id: "appleHealth-income-free",
+      description: "Free coverage for households at or below about 210% of the federal poverty level.",
+      citation: { label: "Apple Health for Kids income", url: "https://www.hca.wa.gov/free-or-low-cost-health-care/i-help-others-apply-and-access-apple-health/apple-health-kids-and-without-premiums" },
+      monthlyThreshold: 5300,
+      required: false,
+      weight: 3,
+      passReason: "Your income range likely qualifies for free Apple Health for Kids.",
+      failReason: "Your income may be above the free tier, but coverage with a small premium may still be available up to about 312% of the poverty level.",
+    }),
+    alwaysPasses({
+      id: "appleHealth-open",
+      description: "Apple Health for Kids can also be available with a premium at higher incomes.",
+      citation: { label: "Health care for children", url: "https://www.hca.wa.gov/health-care-services-supports/program-administration/health-care-children" },
+      reason: "Even at higher incomes, coverage with a small monthly premium may be available.",
+      weight: 1,
+    }),
+  ],
+};
+
+export const abaLaunch: Program = {
+  id: "abaLaunch",
+  category: "health",
+  agency: "UW",
+  agencyName: "University of Washington Autism Center",
+  content: {
+    humanName: "A fast-start autism therapy program while you wait",
+    officialName: "UW Autism Center ABA LAUNCH",
+    oneLiner:
+      "A short, intensive autism therapy program for young children who are waiting to begin ongoing ABA therapy.",
+    exampleFirst:
+      "Imagine your young child was just diagnosed with autism and the waitlist for therapy is months long. ABA LAUNCH gives your child 12 weeks of intensive therapy right away while you wait for an ongoing spot, and it coaches you as a parent too. (Officially the UW Autism Center's ABA LAUNCH program.)",
+    whatYouGet: [
+      "12 weeks of 1-on-1 ABA therapy, Monday through Thursday",
+      "Speech-language therapy sessions",
+      "Monthly occupational therapy consultation",
+      "Weekly parent coaching and parent education classes",
+      "Planning to transition into ongoing therapy",
+    ],
+    tips: [
+      "This is a specialized program near Seattle and Tacoma, so location matters.",
+      "Your child needs an order for ABA therapy from a recognized Center of Excellence first.",
+      "It is designed for the waiting period, so apply as soon as you have a diagnosis.",
+    ],
+  },
+  apply: {
+    url: "https://depts.washington.edu/uwautism/clinical-services/aba-launch/",
+    phone: "206-543-8379",
+    steps: [
+      "Confirm your child has an autism diagnosis and Apple Health coverage.",
+      "Get an order for ABA therapy from a recognized Center of Excellence.",
+      "Register through the UW Autism Center intake office.",
+      "Email abalaunch@uw.edu or call 206-543-8379 with questions.",
+    ],
+    documents: [
+      "Autism diagnosis records",
+      "Order or prescription for ABA therapy",
+      "Apple Health (Medicaid) plan information",
+      "Any early intervention or school evaluations",
+    ],
+  },
+  citations: [
+    { label: "UW ABA LAUNCH", url: "https://depts.washington.edu/uwautism/clinical-services/aba-launch/" },
+    { label: "UW Autism Center intake", url: "https://depts.washington.edu/uwautism/clinical-services/intake/" },
+  ],
+  dependsOn: ["appleHealth"],
+  unlocks: [],
+  noEligibilityBarriers: false,
+  addresses: ["therapy"],
+  hasCountyLocalContact: false,
+  rules: [
+    ageInRange({
+      id: "abaLaunch-age",
+      description: "For children up to 6 years old.",
+      citation: { label: "ABA LAUNCH flyer", url: "https://depts.washington.edu/uwautism/clinical-services/aba-launch/" },
+      minBand: "under3",
+      maxBand: "3to5",
+      required: true,
+      weight: 3,
+      passReason: "Your child is in the under-6 age range this program serves.",
+      failReason: "This program is only for children under 6 years old.",
+    }),
+    hasAnyCondition({
+      id: "abaLaunch-autism",
+      description: "Requires a diagnosis of Autism Spectrum Disorder.",
+      citation: { label: "ABA LAUNCH criteria", url: "https://depts.washington.edu/uwautism/clinical-services/aba-launch/" },
+      conditions: ["autism"],
+      required: true,
+      weight: 3,
+      passReason: "Your child has an autism diagnosis, which this program requires.",
+      failReason: "This program is specifically for children with an autism diagnosis.",
+      suspectedCountsAsMaybe: true,
+    }),
+  ],
+};

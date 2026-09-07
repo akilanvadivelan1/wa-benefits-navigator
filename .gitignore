@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+.env
+.env.local
+
+# Note: web/build/ IS committed so the app runs without a build step
+# (the sandbox and reviewers may not have npm registry access).

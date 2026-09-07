@@ -1,0 +1,20 @@
+{
+  "name": "wa-benefits-navigator-core",
+  "version": "0.1.0",
+  "description": "Portable rules engine and program data for the WA Benefits Navigator app. Framework-agnostic TypeScript.",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "demo": "node --experimental-strip-types src/demo.ts",
+    "test": "node --experimental-strip-types src/engine.test.ts",
+    "build:web": "tsc -p tsconfig.web.json",
+    "serve": "node scripts/serve.mjs"
+  },
+  "keywords": [
+    "washington",
+    "benefits",
+    "special-needs",
+    "eligibility"
+  ],
+  "license": "MIT"
+}
