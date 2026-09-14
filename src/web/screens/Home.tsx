@@ -7,23 +7,29 @@ export const Home = ({ onStartQuiz, onBrowse }: Props) => {
   return (
     <div className="home">
       <section className="hero">
+        <div className="hero-glow" aria-hidden="true" />
         <div className="hero-content">
-          <span className="hero-badge">Washington State Programs</span>
+          <span className="hero-badge">
+            <span className="hero-badge-dot" aria-hidden="true" />
+            For Washington families
+          </span>
           <h1 className="hero-title">
-            Find the right programs for your child in minutes
+            You are not alone in this.
+            <br />
+            <span className="hero-title-accent">Let us help you find support.</span>
           </h1>
           <p className="hero-subtitle">
-            There are more than 15 programs across 5 state agencies and the
-            federal government for neuro-divergent and special needs children.
-            Answer a few plain-language questions and get a personalized plan
-            that shows what your family likely qualifies for and how to apply.
+            Raising a neuro-divergent or special needs child is a journey, and
+            Washington has more than 15 programs to help. Answer a few gentle,
+            plain-language questions and get a personalized plan that shows what
+            your family likely qualifies for and exactly how to start.
           </p>
           <div className="hero-buttons">
             <button className="btn btn-accent btn-lg" onClick={onStartQuiz}>
-              Find Programs for My Child
+              Find programs for my child
             </button>
             <button className="btn btn-secondary" onClick={onBrowse}>
-              Browse All Programs
+              Browse all programs
             </button>
           </div>
           <div className="hero-stats">
@@ -32,16 +38,17 @@ export const Home = ({ onStartQuiz, onBrowse }: Props) => {
               <span className="stat-label">Programs</span>
             </div>
             <div className="stat">
-              <span className="stat-number">5</span>
-              <span className="stat-label">State Agencies</span>
+              <span className="stat-number">2 min</span>
+              <span className="stat-label">To get started</span>
             </div>
             <div className="stat">
-              <span className="stat-number">Free</span>
-              <span className="stat-label">and Private</span>
+              <span className="stat-number">100%</span>
+              <span className="stat-label">Free and private</span>
             </div>
           </div>
           <p className="hero-privacy">
-            Your answers stay on your device. Nothing is saved or sent anywhere.
+            <span aria-hidden="true">🔒</span> Your answers stay on your device.
+            Nothing is saved or sent anywhere.
           </p>
         </div>
       </section>
@@ -75,6 +82,21 @@ export const Home = ({ onStartQuiz, onBrowse }: Props) => {
               links, phone numbers, and the documents to gather.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section className="reassure">
+        <div className="reassure-inner">
+          <h2>We know this can feel overwhelming</h2>
+          <p>
+            The system is confusing on purpose or not, it does not matter. What
+            matters is that you do not have to figure it out alone. We explain
+            every program in plain language, lead with real examples, and always
+            point you to the official source so you can trust what you read.
+          </p>
+          <button className="btn btn-accent" onClick={onStartQuiz}>
+            Start the 2 minute quiz
+          </button>
         </div>
       </section>
     </div>

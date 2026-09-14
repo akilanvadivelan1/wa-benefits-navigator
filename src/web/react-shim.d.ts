@@ -29,6 +29,7 @@ declare module "react" {
   export type SetStateAction<S> = S | ((prev: S) => S);
 
   export function useState<S>(initial: S | (() => S)): [S, Dispatch<SetStateAction<S>>];
+  export function useState<S = undefined>(): [S | undefined, Dispatch<SetStateAction<S | undefined>>];
   export function useMemo<T>(factory: () => T, deps: unknown[]): T;
   export function useEffect(effect: () => void | (() => void), deps?: unknown[]): void;
   export function useRef<T>(initial: T): { current: T };

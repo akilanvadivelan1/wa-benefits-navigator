@@ -66,6 +66,53 @@ export type HelpType =
   | "navigation";
 
 /**
+ * Whether the child has a formal diagnosis yet. Some programs need a formal
+ * diagnosis (ABA therapy), while others help even without one (ESIT, school
+ * evaluations, CYSHCN navigation).
+ */
+export type DiagnosisStatus = "diagnosed" | "inProcess" | "none";
+
+/**
+ * Current health insurance situation. Drives Apple Health guidance and whether
+ * Apple Health can be a secondary payer.
+ */
+export type InsuranceStatus =
+  | "appleHealthAlready"
+  | "privateOnly"
+  | "uninsured"
+  | "notSure";
+
+/**
+ * Citizenship / immigration status, in plain terms. Some programs (TANF) have
+ * federal status rules; others (Apple Health for Kids, school services) serve
+ * children regardless of immigration status.
+ */
+export type ResidencyStatus =
+  | "citizenOrLpr" // U.S. citizen or lawful permanent resident
+  | "otherStatus"
+  | "preferNotToSay";
+
+/**
+ * Whether the parent's caregiving affects their ability to work. Drives the
+ * TANF WorkFirst exemption and respite prioritization.
+ */
+export type CaregivingImpact =
+  | "cannotWork" // caregiving prevents working
+  | "reducedWork" // had to cut back
+  | "worksFully"
+  | "notApplicable";
+
+/** Specific day-to-day challenges. Multi-select. Sharpens matching and tips. */
+export type SpecificNeed =
+  | "behavior" // intense behaviors, meltdowns, elopement
+  | "communication" // nonverbal or limited speech
+  | "mobility" // physical or motor support
+  | "medical" // complex medical needs, equipment
+  | "feeding" // eating or feeding difficulties
+  | "sleep" // significant sleep disruption
+  | "safety"; // needs constant supervision for safety
+
+/**
  * Washington counties. Used only to surface local contacts (not eligibility).
  * Kept as a string to avoid a giant union; validated against a known list.
  */
@@ -74,8 +121,16 @@ export type County = string;
 /** Programs the family is already enrolled in (optional). Avoids re-recommending. */
 export type EnrolledProgram = ProgramId;
 
-/** The complete set of answers a user provides. All fields optional except the ones the quiz requires. */
+/**
+ * The complete set of answers a user provides.
+ *
+ * The first block is the original, required-ish set. The second block is the
+ * deeper, optional set added to improve matching accuracy. All deeper fields
+ * are optional so the engine stays backward compatible and works even when a
+ * family answers only the basics.
+ */
 export interface QuizAnswers {
+  // Core answers
   ageBand?: AgeBand;
   conditions: Condition[];
   supportLevel?: SupportLevel;
@@ -84,6 +139,20 @@ export interface QuizAnswers {
   county?: County;
   helpTypes: HelpType[];
   alreadyEnrolled: EnrolledProgram[];
+
+  // Deeper answers (all optional)
+  /** Whether the child has a formal diagnosis. */
+  diagnosisStatus?: DiagnosisStatus;
+  /** Current insurance situation. */
+  insuranceStatus?: InsuranceStatus;
+  /** Citizenship / immigration status, in plain terms. */
+  residencyStatus?: ResidencyStatus;
+  /** How caregiving affects the parent's ability to work. */
+  caregivingImpact?: CaregivingImpact;
+  /** Specific day-to-day challenges the child faces. */
+  specificNeeds?: SpecificNeed[];
+  /** Approximate household savings/resources, for resource-limited programs. */
+  hasSignificantSavings?: boolean;
 }
 
 // ---------------------------------------------------------------------------

@@ -5,7 +5,9 @@
 import type { Program } from "../types.ts";
 import {
   alwaysPasses,
+  caregivingImpactIsOneOf,
   incomeAtOrBelow,
+  residencyIsOneOf,
   supportLevelIsOneOf,
 } from "../ruleHelpers.ts";
 
@@ -81,6 +83,16 @@ export const ssi: Program = {
       passReason: "Your income range may fall within SSI limits after the deeming rules are applied.",
       failReason: "Higher household income often reduces or removes the SSI benefit for a child, though it is worth checking, especially near age 18.",
     }),
+    residencyIsOneOf({
+      id: "ssi-residency",
+      description: "SSI generally requires U.S. citizenship or a qualifying immigration status.",
+      citation: { label: "SSI for children", url: "https://www.ssa.gov/ssi/text-child-ussi.htm" },
+      statuses: ["citizenOrLpr"],
+      required: false,
+      weight: 1,
+      passReason: "The citizenship or residency requirement for SSI appears to be met.",
+      failReason: "SSI has federal citizenship and immigration rules, so approval may depend on status. It is still worth checking.",
+    }),
   ],
 };
 
@@ -150,6 +162,14 @@ export const tanf: Program = {
       citation: { label: "Who is eligible for TANF (WAC 388-400-0005)", url: "https://app.leg.wa.gov/wac/default.aspx?cite=388-400-0005" },
       reason: "TANF is for families that include a minor child.",
       weight: 1,
+    }),
+    caregivingImpactIsOneOf({
+      id: "tanf-workfirst-exemption",
+      description: "Parents who cannot work because they care for a special needs child may be exempt from the work requirement.",
+      citation: { label: "WorkFirst exemptions", url: "https://www.dshs.wa.gov/esa/chapter-6-resolving-issues/68-exemptions" },
+      impacts: ["cannotWork", "reducedWork"],
+      weight: 2,
+      boostReason: "Because caregiving affects your ability to work, you may qualify for a work-requirement exemption while still receiving TANF cash.",
     }),
   ],
 };

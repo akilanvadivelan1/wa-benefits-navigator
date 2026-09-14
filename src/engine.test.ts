@@ -211,6 +211,60 @@ console.log("Structural checks on all 15 programs");
 }
 
 // ---------------------------------------------------------------------------
+// Scenario 7: Deeper answers sharpen matching.
+// ---------------------------------------------------------------------------
+console.log("Scenario 7: deeper answers (diagnosis, caregiving, needs)");
+{
+  // A 5-year-old with autism, in-process diagnosis, near significant needs.
+  const inProcess = matchPrograms({
+    ageBand: "3to5",
+    conditions: ["autism"],
+    supportLevel: "significant",
+    incomeBand: "under2000",
+    livingSituation: "withParents",
+    county: "King",
+    helpTypes: ["therapy"],
+    alreadyEnrolled: [],
+    diagnosisStatus: "inProcess",
+    specificNeeds: ["behavior", "safety"],
+    caregivingImpact: "cannotWork",
+  });
+  // ABA LAUNCH requires a formal diagnosis, so in-process should reduce confidence.
+  const aba = inProcess.recommended.find((r) => r.program.id === "abaLaunch");
+  assert(aba?.confidence === "mayQualify", "ABA LAUNCH should be mayQualify when diagnosis is still in process");
+
+  // Respite should carry a boost reason about intensive supervision.
+  const respite = inProcess.recommended.find((r) => r.program.id === "respite");
+  assert(!!respite, "Respite should be recommended");
+  assert(
+    respite!.reasons.some((x) => x.effect === "boost"),
+    "Respite should include a boost reason for intensive needs",
+  );
+
+  // TANF should carry a WorkFirst exemption boost when caregiving prevents work.
+  const tanf = inProcess.recommended.find((r) => r.program.id === "tanf");
+  assert(
+    !!tanf && tanf.reasons.some((x) => x.effect === "boost"),
+    "TANF should include a boost about the WorkFirst exemption",
+  );
+
+  // Same child, but with a formal diagnosis, should make ABA LAUNCH stronger.
+  const diagnosed = matchPrograms({
+    ageBand: "3to5",
+    conditions: ["autism"],
+    supportLevel: "significant",
+    incomeBand: "under2000",
+    livingSituation: "withParents",
+    county: "King",
+    helpTypes: ["therapy"],
+    alreadyEnrolled: [],
+    diagnosisStatus: "diagnosed",
+  });
+  const abaDiagnosed = diagnosed.recommended.find((r) => r.program.id === "abaLaunch");
+  assert(abaDiagnosed?.confidence === "likelyEligible", "ABA LAUNCH should be likelyEligible with a formal diagnosis");
+}
+
+// ---------------------------------------------------------------------------
 // County contacts.
 // ---------------------------------------------------------------------------
 console.log("County contact lookups");

@@ -1,7 +1,7 @@
 /**
  * Disability services programs: DDA, ESIT, CYSHCN, Respite.
  */
-import { ageInRange, alwaysPasses, hasAnyCondition, } from "../ruleHelpers.js";
+import { ageInRange, alwaysPasses, diagnosisStatusIsOneOf, hasAnyCondition, hasAnySpecificNeed, } from "../ruleHelpers.js";
 export const dda = {
     id: "dda",
     category: "services",
@@ -138,6 +138,16 @@ export const esit = {
             failReason: "ESIT focuses on developmental delays or disabilities.",
             suspectedCountsAsMaybe: true,
         }),
+        diagnosisStatusIsOneOf({
+            id: "esit-no-diagnosis-needed",
+            description: "ESIT helps even without a diagnosis. Concerns alone are enough to ask for an evaluation.",
+            citation: { label: "ESIT", url: "https://www.dcyf.wa.gov/services/child-development-supports/esit" },
+            statuses: ["diagnosed", "inProcess", "none"],
+            required: false,
+            weight: 1,
+            passReason: "You do not need a diagnosis. If you have any concern, you can request a free evaluation.",
+            failReason: "",
+        }),
     ],
 };
 export const cyshcn = {
@@ -261,6 +271,14 @@ export const respite = {
             passReason: "Your child's condition may qualify for DDA, which provides respite.",
             failReason: "Respite through DDA requires a qualifying developmental disability.",
             suspectedCountsAsMaybe: true,
+        }),
+        hasAnySpecificNeed({
+            id: "respite-intensive-needs",
+            description: "Families facing intense behaviors, safety supervision, or sleep disruption benefit most from respite.",
+            citation: { label: "DDA respite", url: "https://www.dshs.wa.gov/dda/respite" },
+            needs: ["behavior", "safety", "sleep", "medical"],
+            weight: 2,
+            boostReason: "Because your child needs intensive supervision, a caregiver break through respite is especially relevant.",
         }),
     ],
 };

@@ -249,4 +249,119 @@ export function alwaysPasses(opts: {
   };
 }
 
+/**
+ * Diagnosis-status rule. Passes when the child's diagnosis status is one of the
+ * accepted values. Useful for programs that require a formal diagnosis (ABA) or
+ * that specifically help before a diagnosis (ESIT, school evaluation).
+ */
+export function diagnosisStatusIsOneOf(opts: {
+  id: string;
+  description: string;
+  citation: Citation;
+  statuses: Array<"diagnosed" | "inProcess" | "none">;
+  weight?: number;
+  required?: boolean;
+  passReason: string;
+  failReason: string;
+}): Rule {
+  const weight = opts.weight ?? 2;
+  const required = opts.required ?? false;
+  return {
+    id: opts.id,
+    description: opts.description,
+    citation: opts.citation,
+    evaluate: (a: QuizAnswers): RuleOutcome => {
+      if (!a.diagnosisStatus) {
+        return outcome("unknown", 1, required, "It helps to know if your child has a formal diagnosis yet.");
+      }
+      return opts.statuses.includes(a.diagnosisStatus)
+        ? outcome("pass", weight, required, opts.passReason)
+        : outcome("fail", weight, required, opts.failReason);
+    },
+  };
+}
+
+/**
+ * Specific-need rule. Passes (as a soft boost) when the child has any of the
+ * listed specific needs. Used to raise the relevance of programs like respite
+ * (safety, sleep, behavior) or feeding teams.
+ */
+export function hasAnySpecificNeed(opts: {
+  id: string;
+  description: string;
+  citation: Citation;
+  needs: Array<"behavior" | "communication" | "mobility" | "medical" | "feeding" | "sleep" | "safety">;
+  weight?: number;
+  boostReason: string;
+}): Rule {
+  const weight = opts.weight ?? 2;
+  return {
+    id: opts.id,
+    description: opts.description,
+    citation: opts.citation,
+    evaluate: (a: QuizAnswers): RuleOutcome => {
+      if (!a.specificNeeds || a.specificNeeds.length === 0) return NEUTRAL;
+      const match = a.specificNeeds.some((n) => opts.needs.includes(n));
+      return match ? outcome("boost", weight, false, opts.boostReason) : NEUTRAL;
+    },
+  };
+}
+
+/**
+ * Caregiving-impact rule. Passes when the parent's caregiving affects work in
+ * one of the listed ways. Used for the TANF WorkFirst exemption.
+ */
+export function caregivingImpactIsOneOf(opts: {
+  id: string;
+  description: string;
+  citation: Citation;
+  impacts: Array<"cannotWork" | "reducedWork" | "worksFully" | "notApplicable">;
+  weight?: number;
+  boostReason: string;
+}): Rule {
+  const weight = opts.weight ?? 2;
+  return {
+    id: opts.id,
+    description: opts.description,
+    citation: opts.citation,
+    evaluate: (a: QuizAnswers): RuleOutcome => {
+      if (!a.caregivingImpact) return NEUTRAL;
+      return opts.impacts.includes(a.caregivingImpact)
+        ? outcome("boost", weight, false, opts.boostReason)
+        : NEUTRAL;
+    },
+  };
+}
+
+/**
+ * Residency rule. Passes for the listed statuses. Non-required by default so
+ * that a stricter status simply lowers confidence rather than disqualifying.
+ */
+export function residencyIsOneOf(opts: {
+  id: string;
+  description: string;
+  citation: Citation;
+  statuses: Array<"citizenOrLpr" | "otherStatus" | "preferNotToSay">;
+  weight?: number;
+  required?: boolean;
+  passReason: string;
+  failReason: string;
+}): Rule {
+  const weight = opts.weight ?? 1;
+  const required = opts.required ?? false;
+  return {
+    id: opts.id,
+    description: opts.description,
+    citation: opts.citation,
+    evaluate: (a: QuizAnswers): RuleOutcome => {
+      if (!a.residencyStatus || a.residencyStatus === "preferNotToSay") {
+        return outcome("unknown", 1, required, "Some cash programs have citizenship rules, so this depends on status.");
+      }
+      return opts.statuses.includes(a.residencyStatus)
+        ? outcome("pass", weight, required, opts.passReason)
+        : outcome("fail", weight, required, opts.failReason);
+    },
+  };
+}
+
 export { NEUTRAL, AGE_ORDER, INCOME_ORDER };
