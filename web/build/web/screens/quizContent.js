@@ -98,3 +98,126 @@ export const STEP_META = [
         multi: true,
     },
 ];
+// ---------------------------------------------------------------------------
+// Deeper question options (added to sharpen matching).
+// ---------------------------------------------------------------------------
+export const DIAGNOSIS_OPTIONS = [
+    {
+        value: "diagnosed",
+        label: "Yes, we have a formal diagnosis",
+        description: "A doctor or specialist has given a diagnosis in writing.",
+    },
+    {
+        value: "inProcess",
+        label: "We are in the process of getting one",
+        description: "For example, we are on a waitlist or in the middle of evaluations.",
+    },
+    {
+        value: "none",
+        label: "Not yet, but we have concerns",
+        description: "You have noticed things but have not started a formal evaluation.",
+    },
+];
+export const INSURANCE_OPTIONS = [
+    {
+        value: "appleHealthAlready",
+        label: "We already have Apple Health (Medicaid)",
+        description: "Your child is enrolled in Washington Apple Health.",
+    },
+    {
+        value: "privateOnly",
+        label: "We have private insurance only",
+        description: "For example, coverage through a job or bought on your own.",
+    },
+    {
+        value: "uninsured",
+        label: "Your child has no insurance right now",
+        description: "You are not currently covered.",
+    },
+    {
+        value: "notSure",
+        label: "I am not sure",
+        description: "That is okay. We will still show your options.",
+    },
+];
+export const NEEDS_OPTIONS = [
+    { value: "behavior", label: "Intense behaviors or meltdowns", description: "For example, big reactions, aggression, or wandering off (elopement)." },
+    { value: "communication", label: "Trouble communicating", description: "For example, your child is nonverbal or has very limited speech." },
+    { value: "safety", label: "Needs constant supervision for safety", description: "For example, you cannot safely leave the room." },
+    { value: "sleep", label: "Serious sleep problems", description: "For example, waking often or very little sleep, affecting the whole family." },
+    { value: "feeding", label: "Eating or feeding difficulties", description: "For example, a very limited diet or trouble eating safely." },
+    { value: "medical", label: "Complex medical needs", description: "For example, equipment, tube feeding, or frequent medical care." },
+    { value: "mobility", label: "Physical or movement support", description: "For example, help with walking, sitting, or using their hands." },
+];
+export const CAREGIVING_OPTIONS = [
+    {
+        value: "cannotWork",
+        label: "I cannot work because of caregiving",
+        description: "Caring for your child takes so much that working is not possible right now.",
+    },
+    {
+        value: "reducedWork",
+        label: "I had to cut back on work",
+        description: "You reduced hours or changed jobs to manage caregiving.",
+    },
+    {
+        value: "worksFully",
+        label: "I work full time",
+        description: "Caregiving has not changed your work much.",
+    },
+    {
+        value: "notApplicable",
+        label: "This does not apply to us",
+        description: "Prefer not to answer, or it is not relevant.",
+    },
+];
+export const RESIDENCY_OPTIONS = [
+    {
+        value: "citizenOrLpr",
+        label: "U.S. citizen or green card holder",
+        description: "Your child is a citizen or a lawful permanent resident.",
+    },
+    {
+        value: "otherStatus",
+        label: "Another immigration status",
+        description: "Many programs still help children regardless of status.",
+    },
+    {
+        value: "preferNotToSay",
+        label: "I prefer not to say",
+        description: "That is okay. We will note which programs have status rules.",
+    },
+];
+/** Metadata for the deeper steps, in the order they appear after the core steps. */
+export const DEEP_STEP_META = [
+    {
+        title: "Does your child have a diagnosis yet?",
+        helper: "There is no wrong answer. Many programs help even without one.",
+        whyWeAsk: "A few programs, like some autism therapy, need a formal diagnosis. Many others, like early therapy and school evaluations, help even before a diagnosis.",
+        multi: false,
+    },
+    {
+        title: "What does your child need the most help with day to day?",
+        helper: "Choose all that apply. Skip any that do not fit.",
+        whyWeAsk: "This helps us highlight the most relevant programs, like respite for families who need a break, or feeding support.",
+        multi: true,
+    },
+    {
+        title: "Does caring for your child affect your ability to work?",
+        helper: "Be honest. This can unlock extra support.",
+        whyWeAsk: "If caregiving keeps you from working, some cash programs can waive their work requirement so you still get help.",
+        multi: false,
+    },
+    {
+        title: "What is your child's health insurance right now?",
+        helper: "Pick the closest option.",
+        whyWeAsk: "This helps us guide you on Apple Health, which can be primary coverage or fill gaps in private insurance, and which unlocks other services.",
+        multi: false,
+    },
+    {
+        title: "What is your child's citizenship status?",
+        helper: "This is optional. Many programs help all children regardless of status.",
+        whyWeAsk: "A few cash programs have federal citizenship rules. Health coverage for kids and school services help regardless of immigration status.",
+        multi: false,
+    },
+];

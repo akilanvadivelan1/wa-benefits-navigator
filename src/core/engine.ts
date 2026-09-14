@@ -177,10 +177,20 @@ function orderByDependencies(evaluations: Evaluation[]): Evaluation[] {
     return d;
   }
 
+  // How many included programs depend on this one (its role as a prerequisite).
+  const unlockCount = (id: ProgramId): number =>
+    PROGRAMS_BY_ID[id].unlocks.filter((u) => included.has(u)).length;
+
   return [...evaluations].sort((a, b) => {
     const da = depth(a.program.id, new Set());
     const db = depth(b.program.id, new Set());
     if (da !== db) return da - db; // fewer prerequisites first
+
+    // At the same depth, programs that unlock more included programs come first
+    // (apply the prerequisite before the things that depend on it).
+    const ua = unlockCount(a.program.id);
+    const ub = unlockCount(b.program.id);
+    if (ua !== ub) return ub - ua;
 
     // Confidence tier: likelyEligible/noBarriers before mayQualify.
     const tier = (e: Evaluation) =>

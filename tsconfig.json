@@ -13,6 +13,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/core/**/*", "src/demo.ts", "src/engine.test.ts"],
+  "exclude": ["node_modules", "dist", "src/web"]
 }

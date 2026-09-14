@@ -2,7 +2,7 @@
  * Health coverage programs: Apple Health (Medicaid) and ABA LAUNCH.
  * These are foundational because Apple Health unlocks many other services.
  */
-import { ageInRange, alwaysPasses, hasAnyCondition, incomeAtOrBelow, } from "../ruleHelpers.js";
+import { ageInRange, alwaysPasses, diagnosisStatusIsOneOf, hasAnyCondition, incomeAtOrBelow, } from "../ruleHelpers.js";
 export const appleHealth = {
     id: "appleHealth",
     category: "health",
@@ -83,6 +83,16 @@ export const appleHealth = {
             reason: "Even at higher incomes, coverage with a small monthly premium may be available.",
             weight: 1,
         }),
+        diagnosisStatusIsOneOf({
+            id: "appleHealth-any-diagnosis",
+            description: "Apple Health does not require a diagnosis to enroll.",
+            citation: { label: "Apple Health for Kids", url: "https://www.hca.wa.gov/free-or-low-cost-health-care/i-help-others-apply-and-access-apple-health/apple-health-kids-and-without-premiums" },
+            statuses: ["diagnosed", "inProcess", "none"],
+            required: false,
+            weight: 1,
+            passReason: "You can enroll now. Apple Health does not require a diagnosis, and it can cover the evaluation itself.",
+            failReason: "",
+        }),
     ],
 };
 export const abaLaunch = {
@@ -155,6 +165,16 @@ export const abaLaunch = {
             passReason: "Your child has an autism diagnosis, which this program requires.",
             failReason: "This program is specifically for children with an autism diagnosis.",
             suspectedCountsAsMaybe: true,
+        }),
+        diagnosisStatusIsOneOf({
+            id: "abaLaunch-formal-diagnosis",
+            description: "Requires a formal autism diagnosis and an order for ABA.",
+            citation: { label: "ABA LAUNCH intake", url: "https://depts.washington.edu/uwautism/clinical-services/intake/" },
+            statuses: ["diagnosed"],
+            required: false,
+            weight: 2,
+            passReason: "A formal diagnosis is in place, which this program needs to start.",
+            failReason: "This program needs a formal autism diagnosis and an ABA order first. A diagnostic evaluation is the first step.",
         }),
     ],
 };
