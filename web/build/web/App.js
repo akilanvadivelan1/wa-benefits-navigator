@@ -11,6 +11,7 @@ import { matchPrograms } from "../core/engine.js";
 import { ALL_PROGRAMS, PROGRAMS_BY_ID } from "../core/programs/index.js";
 import { NavBar } from "./components/NavBar.js";
 import { Footer } from "./components/Footer.js";
+import { CursorGlow } from "./components/CursorGlow.js";
 import { Home } from "./screens/Home.js";
 import { Quiz } from "./screens/Quiz.js";
 import { Results } from "./screens/Results.js";
@@ -29,7 +30,7 @@ export const App = () => {
     };
     const openDetail = (programId, from) => setScreen({ name: "detail", programId, from });
     const program = screen.name === "detail" ? PROGRAMS_BY_ID[screen.programId] : null;
-    return (_jsxs("div", { className: "app", children: [_jsx(NavBar, { onHome: goHome, onBrowse: openBrowse, active: screen.name }), _jsxs("main", { className: "app-main", children: [screen.name === "home" && (_jsx(Home, { onStartQuiz: startQuiz, onBrowse: openBrowse })), screen.name === "quiz" && (_jsx(Quiz, { onComplete: finishQuiz, onExit: goHome })), screen.name === "results" && result && answers && (_jsx(Results, { result: result, county: answers.county, onOpenProgram: (id) => openDetail(id, "results"), onRetake: startQuiz, onBrowse: openBrowse })), screen.name === "detail" && program && (_jsx(ProgramDetail, { program: program, county: answers?.county, onBack: () => setScreen(screen.name === "detail" && screen.from === "browse"
+    return (_jsxs("div", { className: "app", children: [_jsx(CursorGlow, {}), _jsx(NavBar, { onHome: goHome, onBrowse: openBrowse, active: screen.name }), _jsxs("main", { className: "app-main", children: [screen.name === "home" && (_jsx(Home, { onStartQuiz: startQuiz, onBrowse: openBrowse })), screen.name === "quiz" && (_jsx(Quiz, { onComplete: finishQuiz, onExit: goHome })), screen.name === "results" && result && answers && (_jsx(Results, { result: result, county: answers.county, onOpenProgram: (id) => openDetail(id, "results"), onRetake: startQuiz, onBrowse: openBrowse })), screen.name === "detail" && program && (_jsx(ProgramDetail, { program: program, county: answers?.county, onBack: () => setScreen(screen.name === "detail" && screen.from === "browse"
                             ? { name: "browse" }
                             : { name: "results" }), backLabel: screen.name === "detail" && screen.from === "browse"
                             ? "Back to All Programs"

@@ -17,6 +17,7 @@ import { matchPrograms } from "../core/engine.ts";
 import { ALL_PROGRAMS, PROGRAMS_BY_ID } from "../core/programs/index.ts";
 import { NavBar } from "./components/NavBar.tsx";
 import { Footer } from "./components/Footer.tsx";
+import { CursorGlow } from "./components/CursorGlow.tsx";
 import { Home } from "./screens/Home.tsx";
 import { Quiz } from "./screens/Quiz.tsx";
 import { Results } from "./screens/Results.tsx";
@@ -56,6 +57,7 @@ export const App = () => {
 
   return (
     <div className="app">
+      <CursorGlow />
       <NavBar
         onHome={goHome}
         onBrowse={openBrowse}

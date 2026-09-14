@@ -49,8 +49,31 @@ body {
 .boot { padding: 40px; text-align: center; color: var(--gray-500); }
 a { color: var(--primary); }
 
-.app { min-height: 100vh; display: flex; flex-direction: column; }
-.app-main { flex: 1; }
+.app { position: relative; min-height: 100vh; display: flex; flex-direction: column; z-index: 0; }
+.app-main { flex: 1; position: relative; z-index: 1; }
+
+/* Red glow that follows the mouse. Sits behind all content and never blocks clicks. */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+  background: radial-gradient(
+    closest-side,
+    rgba(251, 113, 133, 0.38),
+    rgba(225, 29, 72, 0.20) 45%,
+    rgba(225, 29, 72, 0) 72%
+  );
+  filter: blur(24px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor-glow { transition: none; }
+}
 
 /* Buttons */
 .btn {
@@ -245,7 +268,7 @@ a { color: var(--primary); }
 .browse-cta p { font-size: 16px; color: var(--gray-700); margin-bottom: 16px; }
 
 /* Footer */
-.footer { background: #fff; border-top: 1px solid var(--gray-200); margin-top: 40px; }
+.footer { position: relative; z-index: 1; background: #fff; border-top: 1px solid var(--gray-200); margin-top: 40px; }
 .footer-content { max-width: 900px; margin: 0 auto; padding: 24px; text-align: center; }
 .footer-disclaimer { font-size: 13px; color: var(--gray-700); margin-bottom: 8px; }
 .footer-meta { font-size: 12px; color: var(--gray-500); }
