@@ -1,5 +1,5 @@
 import type { Confidence } from "../../core/types.ts";
-import { CONFIDENCE_LABEL } from "../../core/engine.ts";
+import { useLang } from "../i18n/i18n.tsx";
 
 const CLASS_BY_CONFIDENCE: Record<Confidence, string> = {
   likelyEligible: "badge badge-green",
@@ -9,5 +9,6 @@ const CLASS_BY_CONFIDENCE: Record<Confidence, string> = {
 };
 
 export const ConfidenceBadge = ({ confidence }: { confidence: Confidence }) => {
-  return <span className={CLASS_BY_CONFIDENCE[confidence]}>{CONFIDENCE_LABEL[confidence]}</span>;
+  const { t } = useLang();
+  return <span className={CLASS_BY_CONFIDENCE[confidence]}>{t.confidence[confidence]}</span>;
 };

@@ -1,9 +1,14 @@
+import { useLang } from "../i18n/i18n.tsx";
+
 interface Props {
   onStartQuiz: () => void;
   onBrowse: () => void;
 }
 
 export const Home = ({ onStartQuiz, onBrowse }: Props) => {
+  const { t } = useLang();
+  const h = t.home;
+
   return (
     <div className="home">
       <section className="hero">
@@ -11,91 +16,69 @@ export const Home = ({ onStartQuiz, onBrowse }: Props) => {
         <div className="hero-content">
           <span className="hero-badge">
             <span className="hero-badge-dot" aria-hidden="true" />
-            For Washington families
+            {h.badge}
           </span>
           <h1 className="hero-title">
-            You are not alone in this.
+            {h.titleLine1}
             <br />
-            <span className="hero-title-accent">Let us help you find support.</span>
+            <span className="hero-title-accent">{h.titleLine2}</span>
           </h1>
-          <p className="hero-subtitle">
-            Raising a neuro-divergent or special needs child is a journey, and
-            Washington has more than 15 programs to help. Answer a few gentle,
-            plain-language questions and get a personalized plan that shows what
-            your family likely qualifies for and exactly how to start.
-          </p>
+          <p className="hero-subtitle">{h.subtitle}</p>
           <div className="hero-buttons">
             <button className="btn btn-accent btn-lg" onClick={onStartQuiz}>
-              Find programs for my child
+              {h.ctaPrimary}
             </button>
             <button className="btn btn-secondary" onClick={onBrowse}>
-              Browse all programs
+              {h.ctaSecondary}
             </button>
           </div>
           <div className="hero-stats">
             <div className="stat">
               <span className="stat-number">15+</span>
-              <span className="stat-label">Programs</span>
+              <span className="stat-label">{h.statPrograms}</span>
             </div>
             <div className="stat">
-              <span className="stat-number">2 min</span>
-              <span className="stat-label">To get started</span>
+              <span className="stat-number">{h.statTimeValue}</span>
+              <span className="stat-label">{h.statTime}</span>
             </div>
             <div className="stat">
               <span className="stat-number">100%</span>
-              <span className="stat-label">Free and private</span>
+              <span className="stat-label">{h.statFree}</span>
             </div>
           </div>
           <p className="hero-privacy">
-            <span aria-hidden="true">🔒</span> Your answers stay on your device.
-            Nothing is saved or sent anywhere.
+            <span aria-hidden="true">🔒</span> {h.privacy}
           </p>
         </div>
       </section>
 
       <section className="features">
-        <h2 className="section-title">How it works</h2>
+        <h2 className="section-title">{h.howTitle}</h2>
         <div className="features-grid">
           <div className="feature-card">
             <div className="feature-num">1</div>
-            <h3>Answer a few questions</h3>
-            <p>
-              Tell us about your child's age, needs, and your family situation.
-              Every question is explained in plain language with examples. It
-              takes about 2 minutes.
-            </p>
+            <h3>{h.step1Title}</h3>
+            <p>{h.step1Body}</p>
           </div>
           <div className="feature-card">
             <div className="feature-num">2</div>
-            <h3>Get matched</h3>
-            <p>
-              We check your answers against every program's real eligibility
-              rules and show what your family likely qualifies for, with honest
-              confidence levels.
-            </p>
+            <h3>{h.step2Title}</h3>
+            <p>{h.step2Body}</p>
           </div>
           <div className="feature-card">
             <div className="feature-num">3</div>
-            <h3>Take action</h3>
-            <p>
-              Get a step-by-step plan in the order you should apply, with direct
-              links, phone numbers, and the documents to gather.
-            </p>
+            <h3>{h.step3Title}</h3>
+            <p>{h.step3Body}</p>
           </div>
         </div>
       </section>
 
       <section className="reassure">
         <div className="reassure-inner">
-          <h2>We know this can feel overwhelming</h2>
-          <p>
-            The system is confusing on purpose or not, it does not matter. What
-            matters is that you do not have to figure it out alone. We explain
-            every program in plain language, lead with real examples, and always
-            point you to the official source so you can trust what you read.
-          </p>
+          <h2>{h.reassureTitle}</h2>
+          <p>{h.reassureBody}</p>
           <button className="btn btn-accent" onClick={onStartQuiz}>
-            Start the 2 minute quiz
+            {h.reassureCta}
           </button>
         </div>
       </section>

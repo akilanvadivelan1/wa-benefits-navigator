@@ -221,3 +221,40 @@ export const DEEP_STEP_META = [
         multi: false,
     },
 ];
+// ---------------------------------------------------------------------------
+// Bilingual selector.
+// Returns the full set of quiz content for a given language. English is the
+// default; Spanish comes from quizContent.es.ts.
+// ---------------------------------------------------------------------------
+import { AGE_OPTIONS_ES, CAREGIVING_OPTIONS_ES, CONDITION_OPTIONS_ES, DIAGNOSIS_OPTIONS_ES, HELP_OPTIONS_ES, INCOME_OPTIONS_ES, INSURANCE_OPTIONS_ES, LIVING_OPTIONS_ES, NEEDS_OPTIONS_ES, RESIDENCY_OPTIONS_ES, STEP_META_ES, SUPPORT_OPTIONS_ES, } from "./quizContent.es.js";
+const EN_CONTENT = {
+    age: AGE_OPTIONS,
+    conditions: CONDITION_OPTIONS,
+    support: SUPPORT_OPTIONS,
+    income: INCOME_OPTIONS,
+    living: LIVING_OPTIONS,
+    help: HELP_OPTIONS,
+    diagnosis: DIAGNOSIS_OPTIONS,
+    needs: NEEDS_OPTIONS,
+    caregiving: CAREGIVING_OPTIONS,
+    insurance: INSURANCE_OPTIONS,
+    residency: RESIDENCY_OPTIONS,
+    stepMeta: [...STEP_META, ...DEEP_STEP_META],
+};
+const ES_CONTENT = {
+    age: AGE_OPTIONS_ES,
+    conditions: CONDITION_OPTIONS_ES,
+    support: SUPPORT_OPTIONS_ES,
+    income: INCOME_OPTIONS_ES,
+    living: LIVING_OPTIONS_ES,
+    help: HELP_OPTIONS_ES,
+    diagnosis: DIAGNOSIS_OPTIONS_ES,
+    needs: NEEDS_OPTIONS_ES,
+    caregiving: CAREGIVING_OPTIONS_ES,
+    insurance: INSURANCE_OPTIONS_ES,
+    residency: RESIDENCY_OPTIONS_ES,
+    stepMeta: STEP_META_ES,
+};
+export function getQuizContent(lang) {
+    return lang === "es" ? ES_CONTENT : EN_CONTENT;
+}

@@ -35,6 +35,13 @@ declare module "react" {
   export function useRef<T>(initial: T): { current: T };
   export function useCallback<T extends (...args: never[]) => unknown>(cb: T, deps: unknown[]): T;
 
+  export interface Context<T> {
+    Provider: (props: { value: T; children?: ReactNode }) => ReactElement | null;
+    Consumer: (props: { children: (value: T) => ReactNode }) => ReactElement | null;
+  }
+  export function createContext<T>(defaultValue: T): Context<T>;
+  export function useContext<T>(context: Context<T>): T;
+
   export const Fragment: unknown;
   export function createElement(type: unknown, props?: unknown, ...children: unknown[]): ReactElement;
 
@@ -44,6 +51,8 @@ declare module "react" {
     useEffect: typeof useEffect;
     useRef: typeof useRef;
     useCallback: typeof useCallback;
+    createContext: typeof createContext;
+    useContext: typeof useContext;
     Fragment: typeof Fragment;
     createElement: typeof createElement;
   };

@@ -5,8 +5,9 @@ import { jsx as _jsx } from "react/jsx-runtime";
  */
 import { createRoot } from "react-dom/client";
 import { App } from "./App.js";
+import { LanguageProvider } from "./i18n/i18n.js";
 const container = document.getElementById("root");
 if (container) {
     const root = createRoot(container);
-    root.render(_jsx(App, {}));
+    root.render(_jsx(LanguageProvider, { children: _jsx(App, {}) }));
 }

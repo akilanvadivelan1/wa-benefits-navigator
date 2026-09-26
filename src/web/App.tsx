@@ -1,9 +1,9 @@
 /**
  * App shell and simple screen router.
  *
- * The app is a single-page flow: Home -> Quiz -> Results -> Program Detail,
- * plus a Browse All Programs screen. Navigation is held in component state,
- * so there is no server and nothing is persisted.
+ * Flow: language gate (first visit) -> Home -> Quiz -> Results -> Program
+ * Detail, plus Browse, About, and Sources screens. Navigation is held in
+ * component state, so there is no server and nothing is persisted.
  */
 
 import { useMemo, useState } from "react";
@@ -15,23 +15,30 @@ import type {
 } from "../core/types.ts";
 import { matchPrograms } from "../core/engine.ts";
 import { ALL_PROGRAMS, PROGRAMS_BY_ID } from "../core/programs/index.ts";
+import { useLang } from "./i18n/i18n.tsx";
 import { NavBar } from "./components/NavBar.tsx";
 import { Footer } from "./components/Footer.tsx";
 import { CursorGlow } from "./components/CursorGlow.tsx";
+import { LanguageGate } from "./screens/LanguageGate.tsx";
 import { Home } from "./screens/Home.tsx";
 import { Quiz } from "./screens/Quiz.tsx";
 import { Results } from "./screens/Results.tsx";
 import { ProgramDetail } from "./screens/ProgramDetail.tsx";
 import { Browse } from "./screens/Browse.tsx";
+import { About } from "./screens/About.tsx";
+import { Sources } from "./screens/Sources.tsx";
 
 export type Screen =
   | { name: "home" }
   | { name: "quiz" }
   | { name: "results" }
   | { name: "detail"; programId: ProgramId; from: "results" | "browse" }
-  | { name: "browse" };
+  | { name: "browse" }
+  | { name: "about" }
+  | { name: "sources" };
 
 export const App = () => {
+  const { chosen, t } = useLang();
   const [screen, setScreen] = useState<Screen>({ name: "home" });
   const [answers, setAnswers] = useState<QuizAnswers | null>(null);
 
@@ -40,9 +47,16 @@ export const App = () => {
     [answers],
   );
 
+  // Show the language gate until the user has explicitly chosen a language.
+  if (chosen === null) {
+    return <LanguageGate />;
+  }
+
   const goHome = () => setScreen({ name: "home" });
   const startQuiz = () => setScreen({ name: "quiz" });
   const openBrowse = () => setScreen({ name: "browse" });
+  const openAbout = () => setScreen({ name: "about" });
+  const openSources = () => setScreen({ name: "sources" });
 
   const finishQuiz = (a: QuizAnswers) => {
     setAnswers(a);
@@ -61,6 +75,8 @@ export const App = () => {
       <NavBar
         onHome={goHome}
         onBrowse={openBrowse}
+        onAbout={openAbout}
+        onSources={openSources}
         active={screen.name}
       />
       <main className="app-main">
@@ -92,8 +108,8 @@ export const App = () => {
             }
             backLabel={
               screen.name === "detail" && screen.from === "browse"
-                ? "Back to All Programs"
-                : "Back to Results"
+                ? t.detail.backPrograms
+                : t.detail.backResults
             }
           />
         )}
@@ -104,6 +120,8 @@ export const App = () => {
             onStartQuiz={startQuiz}
           />
         )}
+        {screen.name === "about" && <About onStartQuiz={startQuiz} />}
+        {screen.name === "sources" && <Sources />}
       </main>
       <Footer />
     </div>
