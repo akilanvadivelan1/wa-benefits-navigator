@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "WA Benefits Navigator",
+    "slug": "wa-benefits-navigator",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "wabenefits",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#0E7C74"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "org.wabenefits.navigator"
+    },
+    "android": {
+      "package": "org.wabenefits.navigator"
+    }
+  }
+}
