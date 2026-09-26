@@ -1,15 +1,12 @@
-import { DISCLAIMER } from "../../core/engine.ts";
+import { useLang } from "../i18n/i18n.tsx";
 
 export const Footer = () => {
+  const { t } = useLang();
   return (
     <footer className="footer">
       <div className="footer-content">
-        <p className="footer-disclaimer">{DISCLAIMER}</p>
-        <p className="footer-meta">
-          WA Benefits Navigator. Built for the Congressional App Challenge.
-          Information is drawn from official Washington State and federal
-          government sources.
-        </p>
+        <p className="footer-disclaimer">{t.footer.disclaimer}</p>
+        <p className="footer-meta">{t.footer.meta}</p>
       </div>
     </footer>
   );

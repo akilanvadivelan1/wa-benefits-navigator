@@ -1,5 +1,6 @@
 import type { MatchResult, ProgramId } from "../../core/types.ts";
 import { ConfidenceBadge } from "../components/Badge.tsx";
+import { useLang } from "../i18n/i18n.tsx";
 
 interface Props {
   result: MatchResult;
@@ -10,6 +11,8 @@ interface Props {
 }
 
 export const Results = ({ result, onOpenProgram, onRetake, onBrowse }: Props) => {
+  const { t } = useLang();
+  const r0 = t.results;
   const { recommended, notLikely, summary } = result;
 
   const firstStep = recommended[0];
@@ -24,18 +27,15 @@ export const Results = ({ result, onOpenProgram, onRetake, onBrowse }: Props) =>
           </svg>
         </div>
         <h1 className="results-title">
-          Your child may qualify for <span className="highlight">{summary.total} programs</span>
+          {r0.titlePrefix} <span className="highlight">{summary.total} {r0.titleSuffix}</span>
         </h1>
-        <p className="results-subtitle">
-          Here are the programs we recommend, listed in the order you should
-          apply. Tap any program to see what it does and how to apply.
-        </p>
+        <p className="results-subtitle">{r0.subtitle}</p>
         <div className="results-actions">
           <button className="btn btn-secondary btn-sm" onClick={() => window.print()}>
-            Print or Save as PDF
+            {r0.print}
           </button>
           <button className="btn btn-secondary btn-sm" onClick={onRetake}>
-            Retake Quiz
+            {r0.retake}
           </button>
         </div>
       </div>
@@ -44,9 +44,8 @@ export const Results = ({ result, onOpenProgram, onRetake, onBrowse }: Props) =>
         <div className="results-callout">
           <span className="callout-icon" aria-hidden="true">i</span>
           <span>
-            <strong>Start with #1 ({firstStep.program.content.officialName}).</strong>{" "}
-            {firstStep.whyThisOrder ??
-              "This is a strong first step based on your answers."}
+            <strong>{r0.startWith} ({firstStep.program.content.officialName}).</strong>{" "}
+            {firstStep.whyThisOrder ?? r0.strongFirst}
           </span>
         </div>
       )}
@@ -60,7 +59,7 @@ export const Results = ({ result, onOpenProgram, onRetake, onBrowse }: Props) =>
                 <span className="result-top">
                   <ConfidenceBadge confidence={r.confidence} />
                   <span className="result-agency">{r.program.agencyName}</span>
-                  {r.alreadyEnrolled && <span className="badge badge-gray">Already enrolled</span>}
+                  {r.alreadyEnrolled && <span className="badge badge-gray">{r0.alreadyEnrolled}</span>}
                 </span>
                 <span className="result-name">{r.program.content.humanName}</span>
                 <span className="result-official">{r.program.content.officialName}</span>
@@ -69,7 +68,7 @@ export const Results = ({ result, onOpenProgram, onRetake, onBrowse }: Props) =>
                   <span className="result-why">{r.whyThisOrder}</span>
                 )}
                 {r.matchesRequestedHelp && (
-                  <span className="result-match">Matches the help you asked for</span>
+                  <span className="result-match">{r0.matchesHelp}</span>
                 )}
               </span>
               <span className="result-arrow" aria-hidden="true">›</span>
@@ -81,7 +80,7 @@ export const Results = ({ result, onOpenProgram, onRetake, onBrowse }: Props) =>
       {notLikely.length > 0 && (
         <details className="not-likely">
           <summary>
-            Programs that are not likely a fit right now ({notLikely.length})
+            {r0.notLikelyTitle} ({notLikely.length})
           </summary>
           <ul>
             {notLikely.map((r) => {
@@ -99,7 +98,7 @@ export const Results = ({ result, onOpenProgram, onRetake, onBrowse }: Props) =>
 
       <div className="results-footer">
         <button className="btn btn-primary" onClick={onBrowse}>
-          Browse all 15 programs
+          {r0.browseAll}
         </button>
       </div>
     </div>

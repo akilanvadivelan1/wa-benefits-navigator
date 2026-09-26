@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Program, ProgramCategory, ProgramId } from "../../core/types.ts";
+import { useLang } from "../i18n/i18n.tsx";
 
 interface Props {
   programs: Program[];
@@ -7,27 +8,28 @@ interface Props {
   onStartQuiz: () => void;
 }
 
-const CATEGORY_LABEL: Record<ProgramCategory, string> = {
-  health: "Health",
-  services: "Services",
-  cash: "Cash",
-  education: "Education",
-  savings: "Savings",
-  support: "Support",
-};
-
-const FILTERS: Array<{ value: ProgramCategory | "all"; label: string }> = [
-  { value: "all", label: "All" },
-  { value: "health", label: "Health" },
-  { value: "services", label: "Services" },
-  { value: "cash", label: "Cash" },
-  { value: "education", label: "Education" },
-  { value: "savings", label: "Savings" },
-  { value: "support", label: "Support" },
-];
-
 export const Browse = ({ programs, onOpenProgram, onStartQuiz }: Props) => {
+  const { t } = useLang();
   const [filter, setFilter] = useState<ProgramCategory | "all">("all");
+
+  const CATEGORY_LABEL: Record<ProgramCategory, string> = {
+    health: t.category.health,
+    services: t.category.services,
+    cash: t.category.cash,
+    education: t.category.education,
+    savings: t.category.savings,
+    support: t.category.support,
+  };
+
+  const FILTERS: Array<{ value: ProgramCategory | "all"; label: string }> = [
+    { value: "all", label: t.browse.filterAll },
+    { value: "health", label: t.category.health },
+    { value: "services", label: t.category.services },
+    { value: "cash", label: t.category.cash },
+    { value: "education", label: t.category.education },
+    { value: "savings", label: t.category.savings },
+    { value: "support", label: t.category.support },
+  ];
 
   const visible =
     filter === "all" ? programs : programs.filter((p) => p.category === filter);
@@ -35,11 +37,8 @@ export const Browse = ({ programs, onOpenProgram, onStartQuiz }: Props) => {
   return (
     <div className="browse">
       <div className="browse-header">
-        <h1>All Washington State programs</h1>
-        <p>
-          These 15 programs span 5 state agencies and the federal government.
-          Not sure which fit your family? Take the quiz for a personalized plan.
-        </p>
+        <h1>{t.browse.title}</h1>
+        <p>{t.browse.subtitle}</p>
       </div>
 
       <div className="browse-filters">
@@ -72,9 +71,9 @@ export const Browse = ({ programs, onOpenProgram, onStartQuiz }: Props) => {
       </div>
 
       <div className="browse-cta">
-        <p>Not sure which programs are right for your family?</p>
+        <p>{t.browse.ctaText}</p>
         <button className="btn btn-accent" onClick={onStartQuiz}>
-          Take the eligibility quiz
+          {t.browse.ctaButton}
         </button>
       </div>
     </div>

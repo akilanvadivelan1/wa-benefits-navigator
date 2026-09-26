@@ -14,32 +14,21 @@ import type {
   SupportLevel,
 } from "../../core/types.ts";
 import { WA_COUNTIES } from "../../core/counties.ts";
-import {
-  AGE_OPTIONS,
-  CAREGIVING_OPTIONS,
-  CONDITION_OPTIONS,
-  DEEP_STEP_META,
-  DIAGNOSIS_OPTIONS,
-  HELP_OPTIONS,
-  INCOME_OPTIONS,
-  INSURANCE_OPTIONS,
-  LIVING_OPTIONS,
-  NEEDS_OPTIONS,
-  RESIDENCY_OPTIONS,
-  STEP_META,
-  SUPPORT_OPTIONS,
-} from "./quizContent.ts";
+import { useLang } from "../i18n/i18n.tsx";
+import { getQuizContent } from "./quizContent.ts";
 
 interface Props {
   onComplete: (answers: QuizAnswers) => void;
   onExit: () => void;
 }
 
-// Step order: 6 core steps, then 5 deeper steps.
-const ALL_STEP_META = [...STEP_META, ...DEEP_STEP_META];
-const TOTAL_STEPS = ALL_STEP_META.length;
-
 export const Quiz = ({ onComplete, onExit }: Props) => {
+  const { lang, t } = useLang();
+  const content = getQuizContent(lang);
+  const ALL_STEP_META = content.stepMeta;
+  const TOTAL_STEPS = ALL_STEP_META.length;
+  const CORE_STEPS = 6;
+
   const [step, setStep] = useState(0);
   // Core answers
   const [ageBand, setAgeBand] = useState<AgeBand | undefined>();
@@ -60,12 +49,11 @@ export const Quiz = ({ onComplete, onExit }: Props) => {
 
   const meta = ALL_STEP_META[step]!;
   const progress = Math.round(((step + 1) / TOTAL_STEPS) * 100);
-  const isDeepStep = step >= STEP_META.length;
+  const isDeepStep = step >= CORE_STEPS;
 
   const toggle = <T,>(list: T[], value: T): T[] =>
     list.includes(value) ? list.filter((x) => x !== value) : [...list, value];
 
-  // Required steps: only the core single-select ones. Deeper steps are optional.
   const canProceed = (): boolean => {
     switch (step) {
       case 0: return !!ageBand;
@@ -73,7 +61,7 @@ export const Quiz = ({ onComplete, onExit }: Props) => {
       case 2: return !!supportLevel;
       case 3: return !!incomeBand;
       case 4: return !!livingSituation;
-      default: return true; // help types and all deeper steps are optional
+      default: return true;
     }
   };
 
@@ -97,7 +85,7 @@ export const Quiz = ({ onComplete, onExit }: Props) => {
 
   const next = () => {
     if (!canProceed()) {
-      setError("Please choose an answer to continue.");
+      setError(t.quiz.chooseToContinue);
       return;
     }
     setError(null);
@@ -124,8 +112,8 @@ export const Quiz = ({ onComplete, onExit }: Props) => {
           <div className="progress-fill" style={{ width: `${progress}%` }} />
         </div>
         <span className="progress-text">
-          Step {step + 1} of {TOTAL_STEPS}
-          {isDeepStep && " · a few optional questions to sharpen your results"}
+          {t.quiz.stepOf} {step + 1} {t.quiz.of} {TOTAL_STEPS}
+          {isDeepStep && ` · ${t.quiz.optionalNote}`}
         </span>
       </div>
 
@@ -135,36 +123,34 @@ export const Quiz = ({ onComplete, onExit }: Props) => {
 
         <div className="quiz-options">
           {step === 0 &&
-            AGE_OPTIONS.map((o) => (
+            content.age.map((o) => (
               <OptionCard key={o.value} label={o.label} description={o.description} selected={ageBand === o.value} onClick={() => setAgeBand(o.value)} />
             ))}
 
           {step === 1 &&
-            CONDITION_OPTIONS.map((o) => (
+            content.conditions.map((o) => (
               <OptionCard key={o.value} label={o.label} description={o.description} selected={conditions.includes(o.value)} multi onClick={() => setConditions(toggle(conditions, o.value))} />
             ))}
 
           {step === 2 &&
-            SUPPORT_OPTIONS.map((o) => (
+            content.support.map((o) => (
               <OptionCard key={o.value} label={o.label} description={o.description} selected={supportLevel === o.value} onClick={() => setSupportLevel(o.value)} />
             ))}
 
           {step === 3 &&
-            INCOME_OPTIONS.map((o) => (
+            content.income.map((o) => (
               <OptionCard key={o.value} label={o.label} description={o.description} selected={incomeBand === o.value} onClick={() => setIncomeBand(o.value)} />
             ))}
 
           {step === 4 && (
             <>
-              {LIVING_OPTIONS.map((o) => (
+              {content.living.map((o) => (
                 <OptionCard key={o.value} label={o.label} description={o.description} selected={livingSituation === o.value} onClick={() => setLivingSituation(o.value)} />
               ))}
               <div className="county-field">
-                <label htmlFor="county">
-                  Which county do you live in? (optional, helps us show local offices)
-                </label>
+                <label htmlFor="county">{t.quiz.countyLabel}</label>
                 <select id="county" value={county} onChange={(e: { target: { value: string } }) => setCounty(e.target.value)}>
-                  <option value="">Select a county</option>
+                  <option value="">{t.quiz.countySelect}</option>
                   {WA_COUNTIES.map((c) => (
                     <option key={c} value={c}>{c}</option>
                   ))}
@@ -174,52 +160,52 @@ export const Quiz = ({ onComplete, onExit }: Props) => {
           )}
 
           {step === 5 &&
-            HELP_OPTIONS.map((o) => (
+            content.help.map((o) => (
               <OptionCard key={o.value} label={o.label} selected={helpTypes.includes(o.value)} multi onClick={() => setHelpTypes(toggle(helpTypes, o.value))} />
             ))}
 
           {step === 6 &&
-            DIAGNOSIS_OPTIONS.map((o) => (
+            content.diagnosis.map((o) => (
               <OptionCard key={o.value} label={o.label} description={o.description} selected={diagnosisStatus === o.value} onClick={() => setDiagnosisStatus(o.value)} />
             ))}
 
           {step === 7 &&
-            NEEDS_OPTIONS.map((o) => (
+            content.needs.map((o) => (
               <OptionCard key={o.value} label={o.label} description={o.description} selected={specificNeeds.includes(o.value)} multi onClick={() => setSpecificNeeds(toggle(specificNeeds, o.value))} />
             ))}
 
           {step === 8 &&
-            CAREGIVING_OPTIONS.map((o) => (
+            content.caregiving.map((o) => (
               <OptionCard key={o.value} label={o.label} description={o.description} selected={caregivingImpact === o.value} onClick={() => setCaregivingImpact(o.value)} />
             ))}
 
           {step === 9 &&
-            INSURANCE_OPTIONS.map((o) => (
+            content.insurance.map((o) => (
               <OptionCard key={o.value} label={o.label} description={o.description} selected={insuranceStatus === o.value} onClick={() => setInsuranceStatus(o.value)} />
             ))}
 
           {step === 10 &&
-            RESIDENCY_OPTIONS.map((o) => (
+            content.residency.map((o) => (
               <OptionCard key={o.value} label={o.label} description={o.description} selected={residencyStatus === o.value} onClick={() => setResidencyStatus(o.value)} />
             ))}
         </div>
 
         <div className="why-we-ask">
-          <strong>Why we ask:</strong> {meta.whyWeAsk}
+          <strong>{t.quiz.whyWeAsk}</strong> {meta.whyWeAsk}
         </div>
 
         {error && <p className="quiz-error">{error}</p>}
 
         <div className="quiz-nav">
           <button className="btn btn-secondary" onClick={back}>
-            {step === 0 ? "Exit" : "Back"}
+            {step === 0 ? t.quiz.exit : t.quiz.back}
           </button>
           <div className="quiz-nav-right">
             {isDeepStep && step < TOTAL_STEPS - 1 && (
-              <button className="btn btn-ghost" onClick={skip}>Skip</button>
+              <button className="btn btn-ghost" onClick={skip}>{t.quiz.skip}</button>
             )}
             <button className="btn btn-primary" onClick={next}>
-              {step === TOTAL_STEPS - 1 ? "See My Results" : "Next"}
+              {step === TOTAL_STEPS - 1 ? t.quiz.seeResults : t.quiz.next}
             </button>
           </div>
         </div>
