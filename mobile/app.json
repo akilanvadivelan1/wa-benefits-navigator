@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "WA Benefits Navigator",
+    "slug": "wa-benefits-navigator",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "wabenefits",
+    "newArchEnabled": true,
+    "splash": {
+      "backgroundColor": "#0F766E",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "us.congressionalappchallenge.wabenefits"
+    },
+    "android": {
+      "package": "us.congressionalappchallenge.wabenefits"
+    },
+    "assetBundlePatterns": ["**/*"]
+  }
+}
