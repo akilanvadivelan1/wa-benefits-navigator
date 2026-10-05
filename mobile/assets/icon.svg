@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- App icon: a warm teal background with a white checkmark, matching the app brand. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16A79B"/>
+      <stop offset="1" stop-color="#0B5E58"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <!-- Soft coral accent circle -->
+  <circle cx="768" cy="256" r="150" fill="#FB7185" opacity="0.35"/>
+  <!-- Checkmark -->
+  <path d="M300 520 L450 670 L730 360"
+        stroke="#FFFFFF" stroke-width="70"
+        stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

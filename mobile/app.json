@@ -4,19 +4,36 @@
     "slug": "wa-benefits-navigator",
     "version": "1.0.0",
     "orientation": "portrait",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "scheme": "wabenefits",
+    "primaryColor": "#0E7C74",
     "splash": {
-      "resizeMode": "contain",
+      "image": "./assets/splash.png",
+      "resizeMode": "cover",
       "backgroundColor": "#0E7C74"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "org.wabenefits.navigator"
+      "bundleIdentifier": "org.wabenefits.navigator",
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
-      "package": "org.wabenefits.navigator"
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0E7C74"
+      },
+      "package": "org.wabenefits.navigator",
+      "versionCode": 1
+    },
+    "extra": {
+      "eas": {
+        "projectId": "REPLACE_AFTER_EAS_INIT"
+      }
     }
   }
 }
