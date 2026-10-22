@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WA Benefits Navigator</title>
+  <meta name="description" content="Find Washington State programs for your neuro-divergent or special needs child in minutes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <!--
+    React is loaded from an ESM CDN via this import map. This keeps the app
+    fully client-side and buildable without a package registry. The app's own
+    code is compiled from TypeScript to ./build/web/main.js by `tsc`.
+  -->
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="root">
+    <div class="boot">Loading WA Benefits Navigator...</div>
+  </div>
+  <script type="module" src="./build/web/main.js"></script>
+</body>
+</html>
