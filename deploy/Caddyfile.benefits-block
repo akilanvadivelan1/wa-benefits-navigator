@@ -1,0 +1,53 @@
+# WA Benefits Navigator -- Caddy site block
+# ---------------------------------------------------------------------------
+# This is the block that serves the WA Benefits Navigator on the existing
+# Lightsail instance "risk-radar", which already runs Caddy v2 on :80/:443.
+#
+# Your /etc/caddy/Caddyfile already contains a working version of this block.
+# This file is the reference / canonical copy. It should sit ALONGSIDE the
+# existing reverse-proxy block for risks-radar.com -- do not remove that one.
+#
+# Full /etc/caddy/Caddyfile should look like:
+#
+#   risks-radar.com, www.risks-radar.com {
+#       reverse_proxy localhost:8080
+#   }
+#
+#   wabenefitsnavigator.org, www.wabenefitsnavigator.org {
+#       root * /var/www/wa-benefits/docs
+#       encode gzip
+#       file_server
+#   }
+#
+# Notes:
+#   - The app uses in-memory (non-URL) client routing, so no try_files /
+#     SPA fallback is required. Every screen is served from index.html at /.
+#   - Caddy automatically provisions and renews HTTPS (Let's Encrypt) for
+#     these hostnames once their DNS points at this instance. No Certbot.
+#   - After editing the Caddyfile, ALWAYS validate before reloading:
+#         caddy validate --config /etc/caddy/Caddyfile
+#         sudo systemctl reload caddy
+# ---------------------------------------------------------------------------
+
+wabenefitsnavigator.org, www.wabenefitsnavigator.org {
+    root * /var/www/wa-benefits/docs
+    encode gzip
+
+    # Cache the compiled JS/CSS and fonts aggressively; index.html stays fresh
+    # so new deploys are picked up immediately.
+    @static {
+        path *.js *.css *.woff2 *.woff *.ttf *.svg *.png *.jpg *.jpeg *.webp *.ico
+    }
+    header @static Cache-Control "public, max-age=604800"
+    header /index.html Cache-Control "no-cache"
+
+    # Sensible security headers for a static public site.
+    header {
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        X-Frame-Options "SAMEORIGIN"
+        -Server
+    }
+
+    file_server
+}
