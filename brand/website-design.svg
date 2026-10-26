@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1400" height="1000" viewBox="0 0 1400 1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="heroglow" cx="0.5" cy="0" r="0.8">
+      <stop offset="0" stop-color="#16A79B" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#16A79B" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="accentbtn" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FB7185"/>
+      <stop offset="1" stop-color="#E11D48"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Page background -->
+  <rect width="1400" height="1000" fill="#C9C4BB"/>
+
+  <!-- Browser window -->
+  <rect x="40" y="40" width="1320" height="920" rx="14" fill="#FBF9F6" stroke="#B9B2A6"/>
+  <!-- Browser chrome -->
+  <rect x="40" y="40" width="1320" height="56" rx="14" fill="#EFEBE4"/>
+  <rect x="40" y="82" width="1320" height="14" fill="#EFEBE4"/>
+  <circle cx="72" cy="68" r="7" fill="#FF5F57"/>
+  <circle cx="96" cy="68" r="7" fill="#FEBC2E"/>
+  <circle cx="120" cy="68" r="7" fill="#28C840"/>
+  <rect x="160" y="54" width="1120" height="28" rx="14" fill="#FFFFFF" stroke="#E7E2DA"/>
+  <text x="180" y="73" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#7A7266">https://wabenefitsnavigator.org</text>
+
+  <!-- Nav bar -->
+  <rect x="40" y="96" width="1320" height="60" fill="#FFFFFF"/>
+  <line x1="40" y1="156" x2="1360" y2="156" stroke="#E7E2DA"/>
+  <circle cx="86" cy="126" r="15" fill="#0E7C74"/>
+  <path d="M79 126 L84 131 L94 120" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <text x="112" y="132" font-family="Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#2A2620">WA Benefits Navigator</text>
+  <text x="980" y="132" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#7A7266">Home</text>
+  <text x="1050" y="132" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#7A7266">Programs</text>
+  <text x="1140" y="132" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#7A7266">About</text>
+  <rect x="1210" y="112" width="86" height="30" rx="15" fill="#F4F1EC"/>
+  <rect x="1210" y="112" width="43" height="30" rx="15" fill="#0E7C74"/>
+  <text x="1222" y="131" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#fff">EN</text>
+  <text x="1264" y="131" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#7A7266">ES</text>
+
+  <!-- Hero -->
+  <rect x="40" y="156" width="1320" height="420" fill="url(#heroglow)"/>
+  <rect x="540" y="210" width="320" height="34" rx="17" fill="#CFF3EE"/>
+  <circle cx="566" cy="227" r="5" fill="#0E7C74"/>
+  <text x="582" y="232" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#0B5E58">For Washington families</text>
+
+  <text x="700" y="310" font-family="Helvetica, Arial, sans-serif" font-size="46" font-weight="700" fill="#2A2620" text-anchor="middle">You are not alone in this.</text>
+  <text x="700" y="364" font-family="Helvetica, Arial, sans-serif" font-size="46" font-weight="700" fill="#0E7C74" text-anchor="middle">Let us help you find support.</text>
+
+  <text x="700" y="410" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#4A443C" text-anchor="middle">Answer a few plain-language questions and get a personalized plan</text>
+  <text x="700" y="436" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#4A443C" text-anchor="middle">of the programs your child likely qualifies for.</text>
+
+  <!-- Buttons -->
+  <rect x="520" y="470" width="220" height="52" rx="26" fill="url(#accentbtn)"/>
+  <text x="630" y="503" font-family="Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#fff" text-anchor="middle">Find programs for my child</text>
+  <rect x="756" y="470" width="190" height="52" rx="26" fill="#FFFFFF" stroke="#0E7C74" stroke-width="2"/>
+  <text x="851" y="503" font-family="Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#0E7C74" text-anchor="middle">Browse all programs</text>
+
+  <!-- Stat pill -->
+  <rect x="520" y="544" width="360" height="56" rx="28" fill="#FFFFFF" stroke="#E7E2DA"/>
+  <text x="580" y="572" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#0E7C74" text-anchor="middle">15+</text>
+  <text x="580" y="590" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#7A7266" text-anchor="middle">Programs</text>
+  <line x1="640" y1="556" x2="640" y2="588" stroke="#E7E2DA"/>
+  <text x="700" y="572" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#0E7C74" text-anchor="middle">2 min</text>
+  <text x="700" y="590" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#7A7266" text-anchor="middle">To start</text>
+  <line x1="760" y1="556" x2="760" y2="588" stroke="#E7E2DA"/>
+  <text x="820" y="572" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#0E7C74" text-anchor="middle">100%</text>
+  <text x="820" y="590" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#7A7266" text-anchor="middle">Free &amp; private</text>
+
+  <!-- How it works cards -->
+  <g>
+    <rect x="80" y="640" width="390" height="280" rx="16" fill="#FFFFFF" stroke="#E7E2DA"/>
+    <circle cx="120" cy="690" r="22" fill="#0E7C74"/>
+    <text x="120" y="697" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+    <text x="104" y="748" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#2A2620">Answer a few questions</text>
+    <text x="104" y="782" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#7A7266">Every question is in plain language,</text>
+    <text x="104" y="804" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#7A7266">with real examples. About 2 minutes.</text>
+
+    <rect x="505" y="640" width="390" height="280" rx="16" fill="#FFFFFF" stroke="#E7E2DA"/>
+    <circle cx="545" cy="690" r="22" fill="#0E7C74"/>
+    <text x="545" y="697" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+    <text x="529" y="748" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#2A2620">Get matched</text>
+    <text x="529" y="782" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#7A7266">We check your answers against real</text>
+    <text x="529" y="804" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#7A7266">rules and show honest confidence.</text>
+
+    <rect x="930" y="640" width="390" height="280" rx="16" fill="#FFFFFF" stroke="#E7E2DA"/>
+    <circle cx="970" cy="690" r="22" fill="#0E7C74"/>
+    <text x="970" y="697" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+    <text x="954" y="748" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#2A2620">Take action</text>
+    <text x="954" y="782" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#7A7266">A step-by-step plan with links,</text>
+    <text x="954" y="804" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#7A7266">phone numbers, and documents.</text>
+  </g>
+</svg>
