@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="800" viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0E7C74"/>
+      <stop offset="1" stop-color="#0B5E58"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.30" r="0.6">
+      <stop offset="0" stop-color="#16A79B" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#16A79B" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <rect width="600" height="800" fill="url(#glow)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="500" cy="120" r="150" fill="#FB7185" opacity="0.16"/>
+  <circle cx="90" cy="700" r="130" fill="#FFFFFF" opacity="0.05"/>
+
+  <!-- Logo mark (big, centered) -->
+  <circle cx="300" cy="210" r="84" fill="#FFFFFF"/>
+  <path d="M262 212 L288 238 L344 178" stroke="#0E7C74" stroke-width="16"
+        stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- App name -->
+  <text x="300" y="360" font-family="Helvetica, Arial, sans-serif" font-size="46"
+        font-weight="700" fill="#FFFFFF" text-anchor="middle">WA Benefits</text>
+  <text x="300" y="414" font-family="Helvetica, Arial, sans-serif" font-size="46"
+        font-weight="700" fill="#FFFFFF" text-anchor="middle">Navigator</text>
+
+  <!-- Divider -->
+  <rect x="260" y="446" width="80" height="4" rx="2" fill="#FB7185"/>
+
+  <!-- Tagline -->
+  <text x="300" y="506" font-family="Helvetica, Arial, sans-serif" font-size="25"
+        font-weight="600" fill="#CFF3EE" text-anchor="middle">Helping families find</text>
+  <text x="300" y="540" font-family="Helvetica, Arial, sans-serif" font-size="25"
+        font-weight="600" fill="#CFF3EE" text-anchor="middle">the support they deserve</text>
+
+  <!-- Value chips -->
+  <g font-family="Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#FFFFFF" text-anchor="middle">
+    <rect x="150" y="600" width="300" height="48" rx="24" fill="#FFFFFF" opacity="0.14"/>
+    <text x="300" y="630" opacity="1">15+ programs, one simple quiz</text>
+
+    <rect x="170" y="662" width="260" height="48" rx="24" fill="#FFFFFF" opacity="0.14"/>
+    <text x="300" y="692">English and Spanish</text>
+  </g>
+
+  <!-- Audience line -->
+  <text x="300" y="762" font-family="Helvetica, Arial, sans-serif" font-size="17"
+        fill="#FFFFFF" opacity="0.8" text-anchor="middle">For Washington families of special needs children</text>
+</svg>
